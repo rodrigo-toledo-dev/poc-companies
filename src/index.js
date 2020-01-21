@@ -18,6 +18,15 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import {
+  setActiveBundle,
+  registerBundle,
+  reloadBundle,
+  getActiveBundle,
+  getBundles,
+} from 'react-native-dynamic-bundle';
+import RNFS from 'react-native-fs';
+
 import styles from './styles';
 
 const App = () => {
@@ -29,17 +38,16 @@ const App = () => {
       try {
         const companyBundleVersion = await AsyncStorage.getItem(`@companyLogin`+companyLogin)
         if(companyBundleVersion !== null) {
-          console.log(`Empresa: `+companyLogin+` com bundle na versao `+companyBundleVersion)
-          if(companyBundleVersion !== 'v2.bundle'){
-            console.log('Rodando bundle em v1.bundle')
-          }else{
-            console.log('Rodando bundle em v2.bundle')
-          }
+          console.log(`Empresa: `+companyLogin+' com bundle na versao v2.bundle')
+          await AsyncStorage.setItem(`@companyLogin`+companyLogin,'v2.bundle')
+
         }else{
-          console.log(`Empresa: `+companyLogin+` rodando o primeiro bundle: `+companyBundleVersion)
+          await AsyncStorage.setItem(`@companyLogin`+companyLogin,'v1.bundle')
+          console.log(`Empresa: `+companyLogin+' com bundle na versao v1.bundle')
         }
       } catch(e) {
         Alert.alert('Ocorreu um erro ao rodar o bundle')
+        Alert.alert(e.message)
       }
     }else{
       Alert.alert('Empresa inválida')
