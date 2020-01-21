@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { useState, Component } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -34,17 +34,27 @@ const App = () => {
 
   const generate = async () => {
     const companies = ['proxer', 'google']
+
     if(companies.includes(companyLogin)){
       try {
-        const companyBundleVersion = await AsyncStorage.getItem(`@companyLogin`+companyLogin)
+        const companyKey = `@companyLogin`+companyLogin
+        let companyBundleVersion = await AsyncStorage.getItem(companyKey)
         if(companyBundleVersion !== null) {
-          console.log(`Empresa: `+companyLogin+' com bundle na versao v2.bundle')
-          await AsyncStorage.setItem(`@companyLogin`+companyLogin,'v2.bundle')
-
+          companyBundleVersion = 'v2.bundle'
         }else{
-          await AsyncStorage.setItem(`@companyLogin`+companyLogin,'v1.bundle')
-          console.log(`Empresa: `+companyLogin+' com bundle na versao v1.bundle')
+          companyBundleVersion = 'v1.bundle'
         }
+
+        await AsyncStorage.setItem(companyKey,companyBundleVersion)
+        console.log(`Empresa: `+companyLogin+` com bundle na versao `+companyBundleVersion)
+        console.log(RNFS.DocumentDirectoryPath + companyLogin + companyBundleVersion)
+        registerBundle(companyLogin, RNFS.DocumentDirectoryPath + companyLogin + companyBundleVersion);
+        setActiveBundle(companyLogin);
+
+        const bundles = await getBundles();
+        const activeBundle = await getActiveBundle();
+
+        reloadBundle();
       } catch(e) {
         Alert.alert('Ocorreu um erro ao rodar o bundle')
         Alert.alert(e.message)
