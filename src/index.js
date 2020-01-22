@@ -40,15 +40,17 @@ const App = () => {
         const companyKey = `@companyLogin`+companyLogin
         let companyBundleVersion = await AsyncStorage.getItem(companyKey)
         if(companyBundleVersion !== null) {
-          companyBundleVersion = 'v2.bundle'
+          companyBundleVersion = 'v2.package'
         }else{
-          companyBundleVersion = 'v1.bundle'
+          companyBundleVersion = 'v1.package'
         }
+
+        const basePath = '../packages/'
 
         await AsyncStorage.setItem(companyKey,companyBundleVersion)
         console.log(`Empresa: `+companyLogin+` com bundle na versao `+companyBundleVersion)
-        console.log(RNFS.DocumentDirectoryPath + companyLogin + companyBundleVersion)
-        registerBundle(companyLogin, RNFS.DocumentDirectoryPath + companyLogin + companyBundleVersion);
+        console.log(basePath + companyBundleVersion)
+        registerBundle(companyLogin, basePath + companyBundleVersion);
         setActiveBundle(companyLogin);
 
         const bundles = await getBundles();
