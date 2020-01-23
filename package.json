@@ -14,7 +14,9 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-dynamic-bundle": "^0.5.0",
-    "react-native-fs": "^2.16.2"
+    "react-native-fs": "^2.16.2",
+    "reactotron-react-native": "^4.0.3",
+    "reactotron-redux": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",

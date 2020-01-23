@@ -6,7 +6,10 @@
  * @flow
  */
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
+import './config/Reactotron';
+
 import {
   View,
   Text,
@@ -25,7 +28,6 @@ import {
   getActiveBundle,
   getBundles,
 } from 'react-native-dynamic-bundle';
-import RNFS from 'react-native-fs';
 
 import styles from './styles';
 
